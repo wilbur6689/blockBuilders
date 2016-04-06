@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame("BlockBuilder");
-		frame.setSize(800, 600);
+		frame.setSize(500, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.add(new GameFrame());
