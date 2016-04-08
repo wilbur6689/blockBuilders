@@ -50,6 +50,8 @@ public class Player extends Entity {
 			velX = speed;
 		} else if ( key == KeyEvent.VK_SPACE) {
 			GameFrame.addMissile(new Missile(x, y));
+		} else if (key == KeyEvent.VK_E) {
+			GameFrame.addBlock(new Block(x, y));
 		}
 	}
 	

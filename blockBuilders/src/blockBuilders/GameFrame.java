@@ -22,6 +22,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	static ArrayList<Missile> missiles  = new ArrayList<Missile>();
+	static ArrayList<Block> blocks = new ArrayList<Block>();
 	Random rand = new Random();
 	
 	public GameFrame() {
@@ -81,6 +82,15 @@ public class GameFrame extends JPanel implements ActionListener{
 	
 	public static void removeEnemy (Enemy e) {
 		enemies.remove(e);
+	}
+	
+	public static void addBlock(Block block) {
+		blocks.add(block);
+	}
+	
+	
+	public static void removeBlock (Block block) {
+		blocks.remove(block);
 	}
 	
 	public static ArrayList<Enemy> getEnemyList() {
