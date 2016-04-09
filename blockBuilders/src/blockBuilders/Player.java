@@ -37,7 +37,7 @@ public class Player extends Entity {
 		return ic.getImage();
 	}
 
-	public void keyPressed(KeyEvent e) {
+	public void keyPressedP1(KeyEvent e) {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_W) {
@@ -57,7 +57,7 @@ public class Player extends Entity {
 
 	}
 
-	public void keyReleased(KeyEvent e) {
+	public void keyReleasedP1(KeyEvent e) {
 
 		int key = e.getKeyCode();
 
@@ -73,6 +73,42 @@ public class Player extends Entity {
 		}
 	}
 
+	public void keyPressedP2(KeyEvent f) {
+		int key = f.getKeyCode();
+
+		if (key == KeyEvent.VK_8) {
+			velY = -speed;
+		} else if (key == KeyEvent.VK_2) {
+			velY = speed;
+		} else if (key == KeyEvent.VK_4) {
+			velX = -speed;
+
+		} else if (key == KeyEvent.VK_6) {
+			velX = speed;
+		} else if (key == KeyEvent.VK_ENTER) {
+			GameFrame.addMissile(new Missile(x, y));
+		} else if (key == KeyEvent.VK_P) {
+			GameFrame.addBlock(new Block(x, y));
+		}
+
+	}
+
+	public void keyReleasedP2(KeyEvent f) {
+
+		int key = f.getKeyCode();
+
+		if (key == KeyEvent.VK_W) {
+			velY = -0;
+		} else if (key == KeyEvent.VK_S) {
+			velY = 0;
+		} else if (key == KeyEvent.VK_A) {
+			velX = -0;
+
+		} else if (key == KeyEvent.VK_D) {
+			velX = 0;
+		}
+	}
+	
 	public void checkCollisions() {
 		ArrayList<Enemy> enemies = GameFrame.getEnemyList();
 

@@ -18,6 +18,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	
 	Timer mainTimer;
 	Player player1;
+	Player player2;
 	int enemyCount = 5;
 	public static int level = 1;
 	
@@ -30,9 +31,10 @@ public class GameFrame extends JPanel implements ActionListener{
 		setFocusable(true);
 		
 		player1 = new Player (250, 250);
+		player2 = new Player (1000, 250);
 		
 		addKeyListener(new KeyAdapt(player1));
-		
+		addKeyListener(new KeyAdapt(player2));
 		
 		mainTimer = new Timer(10, this);
 		mainTimer.start();
@@ -49,6 +51,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		g2d.drawImage(ic.getImage(), 0,0, null);
 		
 		player1.draw(g2d);
+		player2.draw(g2d);
 		
 		
 		for (int i=0; i < enemies.size(); i++) {

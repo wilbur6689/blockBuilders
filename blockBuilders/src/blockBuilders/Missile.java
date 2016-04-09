@@ -17,7 +17,7 @@ public class Missile extends Entity{
 	}
 	
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getMissileImg(),  x,  y,  null);
+		g2d.drawImage(getMissileImg(),  x+8,  y+23,  null);
 	}
 	
 	public Image getMissileImg() {
@@ -27,7 +27,7 @@ public class Missile extends Entity{
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, getMissileImg().getWidth(null), 
+		return new Rectangle(x+8, y+23, getMissileImg().getWidth(null), 
 				getMissileImg().getHeight(null)); 
 	}
 	
