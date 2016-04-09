@@ -13,7 +13,7 @@ public class Missile extends Entity{
 	}
 
 	public void update() {
-		y -= 3;
+		x += 3;
 	}
 	
 	public void draw(Graphics2D g2d) {

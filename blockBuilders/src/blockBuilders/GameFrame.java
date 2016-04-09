@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,7 +19,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	Timer mainTimer;
 	Player player1;
 	int enemyCount = 5;
-	int level = 1;
+	public static int level = 1;
 	
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	static ArrayList<Missile> missiles  = new ArrayList<Missile>();
@@ -28,7 +29,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	public GameFrame() {
 		setFocusable(true);
 		
-		player1 = new Player (250, 630);
+		player1 = new Player (250, 250);
 		
 		addKeyListener(new KeyAdapt(player1));
 		
@@ -44,7 +45,11 @@ public class GameFrame extends JPanel implements ActionListener{
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
+		ImageIcon ic = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/background.jpg");
+		g2d.drawImage(ic.getImage(), 0,0, null);
+		
 		player1.draw(g2d);
+		
 		
 		for (int i=0; i < enemies.size(); i++) {
 			Enemy tempEnemy = enemies.get(i);
@@ -54,6 +59,11 @@ public class GameFrame extends JPanel implements ActionListener{
 		for (int i=0; i < missiles.size(); i++) {
 			Missile tempMissile = missiles.get(i);
 			tempMissile.draw(g2d);
+		}
+		
+		for (int i = 0; i < blocks.size(); i++) {
+			Block tempBlock = blocks.get(i);
+			tempBlock.draw(g2d);
 		}
 	}
 
@@ -71,6 +81,12 @@ public class GameFrame extends JPanel implements ActionListener{
 			tempMissile.update(); 
 		}
 		
+		for (int i = 0; i < blocks.size(); i++) {
+			Block tempBlock = blocks.get(i);
+			tempBlock.update(); 
+		}
+		               
+		checkEnd();
 		repaint();
 		
 		
@@ -116,7 +132,17 @@ public class GameFrame extends JPanel implements ActionListener{
 		enemyCount = level * 5;
 		
 		for (int i = 0;i < enemyCount; i++) {
-			addEnemy(new Enemy(rand.nextInt(500), -10 + -rand.nextInt(800)));
+			addEnemy(new Enemy(1200 + rand.nextInt(300),rand.nextInt(600)));
+		}
+	}
+	
+	public void checkEnd() {
+		if (enemies.size() == 0) {
+			level++;
+			enemies.clear();
+			missiles.clear();
+			JOptionPane.showMessageDialog(null, "Good work, you have completed level " + (level-1) + ". lets move onto the next level!");
+			startGame();
 		}
 	}
 }

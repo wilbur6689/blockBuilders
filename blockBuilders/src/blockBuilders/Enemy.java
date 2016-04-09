@@ -7,16 +7,21 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class Enemy extends Entity{
+	
+	private int startY;
 
 	public Enemy(int x, int y) {
 		super(x, y);
+		startY = y;
+		
 	}
 
 	
 	public void update() {
 		
-		y += 1;
+		x -= 1;
 		checkCollisions();
+		checkOffScreen();
 	}
 	
 	public void draw(Graphics2D g2d) {
@@ -45,6 +50,12 @@ public class Enemy extends Entity{
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, getEnemyImg().getWidth(null), 
 				getEnemyImg().getHeight(null)); 
+	}
+	
+	public void checkOffScreen() {
+		if (y >= 650) {
+			y = startY;
+		}
 	}
 	
 }

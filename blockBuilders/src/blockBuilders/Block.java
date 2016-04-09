@@ -20,7 +20,7 @@ public class Block extends Entity{
 	}
 	
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getBlockImg(),  x,  y,  null);
+		g2d.drawImage(getBlockImg(),  x+5,  y+20,  null);
 	}
 	
 public Image getBlockImg() {
