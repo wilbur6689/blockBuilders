@@ -13,9 +13,12 @@ public class Player extends Entity {
 
 	int velX, velY = 0;
 	int speed = 3;
+	private int startX;
+	
 
 	public Player(int x, int y) {
 		super(x, y);
+		startX = x;
 
 	}
 
@@ -24,106 +27,117 @@ public class Player extends Entity {
 		x += velX;
 
 		checkCollisions();
+		checkOffScreen();
 	}
 
-	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getPlayerImg(), x, y, null);
-		// g2d.draw(getBounds());
+	public void drawP1(Graphics2D g2d) {
+		g2d.drawImage(getPlayer1Img(), x, y, null);		
+	}
+	
+	public void drawP2(Graphics2D g2d) {		
+		g2d.drawImage(getPlayer2Img(), x, y, null);
 	}
 
-	public Image getPlayerImg() {
+	public Image getPlayer1Img() {
 
-		ImageIcon ic = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/blockPlayer.png");
+		ImageIcon ic = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/blockPlayer1.png");
 		return ic.getImage();
 	}
 
-	public void keyPressedP1(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_W) {
-			velY = -speed;
-		} else if (key == KeyEvent.VK_S) {
-			velY = speed;
-		} else if (key == KeyEvent.VK_A) {
-			velX = -speed;
-
-		} else if (key == KeyEvent.VK_D) {
-			velX = speed;
-		} else if (key == KeyEvent.VK_SPACE) {
-			GameFrame.addMissile(new Missile(x, y));
-		} else if (key == KeyEvent.VK_G) {
-			GameFrame.addBlock(new Block(x, y));
-		}
-
+	public Image getPlayer2Img() {
+		ImageIcon ic = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/blockPlayer2.png");
+		return ic.getImage();
 	}
 
-	public void keyReleasedP1(KeyEvent e) {
 
-		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_W) {
-			velY = -0;
-		} else if (key == KeyEvent.VK_S) {
+	public void moveUp(boolean action) {
+
+		if (action == true) {
+			velY =-speed;
+		} else {
 			velY = 0;
-		} else if (key == KeyEvent.VK_A) {
-			velX = -0;
+		}
+		
+	}
 
-		} else if (key == KeyEvent.VK_D) {
+	public void moveDown(boolean action) {
+		if (action == true) {
+			velY =speed;
+		} else {
+			velY = 0;
+		}
+	}
+
+	public void moveLeft(boolean action) {
+		if (action == true) {
+			velX = -speed;
+		} else {
 			velX = 0;
 		}
 	}
 
-	public void keyPressedP2(KeyEvent f) {
-		int key = f.getKeyCode();
-
-		if (key == KeyEvent.VK_8) {
-			velY = -speed;
-		} else if (key == KeyEvent.VK_2) {
-			velY = speed;
-		} else if (key == KeyEvent.VK_4) {
-			velX = -speed;
-
-		} else if (key == KeyEvent.VK_6) {
-			velX = speed;
-		} else if (key == KeyEvent.VK_ENTER) {
-			GameFrame.addMissile(new Missile(x, y));
-		} else if (key == KeyEvent.VK_P) {
-			GameFrame.addBlock(new Block(x, y));
-		}
-
-	}
-
-	public void keyReleasedP2(KeyEvent f) {
-
-		int key = f.getKeyCode();
-
-		if (key == KeyEvent.VK_W) {
-			velY = -0;
-		} else if (key == KeyEvent.VK_S) {
-			velY = 0;
-		} else if (key == KeyEvent.VK_A) {
-			velX = -0;
-
-		} else if (key == KeyEvent.VK_D) {
+	public void moveRight(boolean action) {
+		if (action == true) {
+			velX =speed;
+		} else {
 			velX = 0;
 		}
 	}
 	
+	public void shootP1(boolean action) {
+		if (action == true) {
+			GameFrame.addP1Missile(new Missile(x, y));
+		}
+	}
+	
+	public void shootP2(boolean action) {
+		if (action == true) {
+			GameFrame.addP2Missile(new Missile(x, y));
+		}
+	}
+	
+	public void placeBlock(boolean action) {
+		if (action == true) {
+			GameFrame.addBlock(new Block(x, y));
+		}
+	}
+	
+	public void checkOffScreen() {
+		if (x <= -20) {
+			x = startX;
+		}
+	}
+
+
 	public void checkCollisions() {
 		ArrayList<Enemy> enemies = GameFrame.getEnemyList();
 
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy tempEnemy = enemies.get(i);
 
-			if (getBounds().intersects(tempEnemy.getBounds())) {
-				JOptionPane.showMessageDialog(null, "you have died on level " + GameFrame.level + "try harder"); 
+			if (getBoundsP1().intersects(tempEnemy.getBounds())) {
+				JOptionPane.showMessageDialog(null, "you have died on level " + GameFrame.level + "try harder");
+				System.exit(0);
+			}
+		}
+		
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy tempEnemy = enemies.get(i);
+
+			if (getBoundsP2().intersects(tempEnemy.getBounds())) {
+				JOptionPane.showMessageDialog(null, "you have died on level " + GameFrame.level + "try harder");
 				System.exit(0);
 			}
 		}
 	}
 
-	public Rectangle getBounds() {
-		return new Rectangle(x, y, getPlayerImg().getWidth(null), getPlayerImg().getHeight(null));
+	public Rectangle getBoundsP1() {
+		return new Rectangle(x, y, getPlayer1Img().getWidth(null), getPlayer1Img().getHeight(null));
+	}
+	
+	public Rectangle getBoundsP2() {
+		return new Rectangle(x, y, getPlayer2Img().getWidth(null), getPlayer2Img().getHeight(null));
 	}
 
 }

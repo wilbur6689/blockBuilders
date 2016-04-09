@@ -30,21 +30,34 @@ public Image getBlockImg() {
 	}
 	
 	public void checkCollisions() {
-		ArrayList<Missile> missiles = GameFrame.getMissileList();
+		ArrayList<Missile> missilesP1 = GameFrame.getMissileListP1();
+		ArrayList<Missile> missilesP2 = GameFrame.getMissileListP2();
 		
-		for (int i=0; i < GameFrame.missiles.size(); i++) {
-			Missile missile = GameFrame.missiles.get(i);
+		
+		for (int i=0; i < GameFrame.missilesP1.size(); i++) {
+			Missile missile = GameFrame.missilesP1.get(i);
 			
-			if (getBounds().intersects(missile.getBounds())) {
+			if (getBounds().intersects(missile.getBoundsP1())) {
 				GameFrame.removeBlock(this);
-				GameFrame.removeMissile(missile);
+				GameFrame.removeP1Missile(missile);
+			}
+			
+		}
+		
+		for (int i=0; i < GameFrame.missilesP2.size(); i++) {
+			Missile missile = GameFrame.missilesP2.get(i);
+
+			
+			if (getBounds().intersects(missile.getBoundsP2())) {
+				GameFrame.removeBlock(this);
+				GameFrame.removeP2Missile(missile);
 			}
 		}
 	}
 	
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, getBlockImg().getWidth(null), 
+		return new Rectangle(x+5, y+20 , getBlockImg().getWidth(null), 
 				getBlockImg().getHeight(null)); 
 	}
 	

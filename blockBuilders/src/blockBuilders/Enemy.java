@@ -8,11 +8,11 @@ import javax.swing.ImageIcon;
 
 public class Enemy extends Entity{
 	
-	private int startY;
+	private int startX;
 
 	public Enemy(int x, int y) {
 		super(x, y);
-		startY = y;
+		startX = x;
 		
 	}
 
@@ -37,12 +37,21 @@ public class Enemy extends Entity{
 	}
 	
 	public void checkCollisions() {
-		for (int i=0; i < GameFrame.getMissileList().size(); i++) {
-			Missile missile = GameFrame.getMissileList().get(i);
+		for (int i=0; i < GameFrame.getMissileListP1().size(); i++) {
+			Missile missile = GameFrame.getMissileListP1().get(i);
 			
-			if (getBounds().intersects(missile.getBounds())) {
+			if (getBounds().intersects(missile.getBoundsP1())) {
 				GameFrame.removeEnemy(this);
-				GameFrame.removeMissile(missile);
+				GameFrame.removeP1Missile(missile);
+			}
+		}
+		
+		for (int i=0; i < GameFrame.getMissileListP2().size(); i++) {
+			Missile missile = GameFrame.getMissileListP2().get(i);
+
+			if (getBounds().intersects(missile.getBoundsP2())) {
+				GameFrame.removeEnemy(this);
+				GameFrame.removeP2Missile(missile);
 			}
 		}
 	}
@@ -53,8 +62,8 @@ public class Enemy extends Entity{
 	}
 	
 	public void checkOffScreen() {
-		if (y >= 650) {
-			y = startY;
+		if (x >= -20) {
+			x = startX;
 		}
 	}
 	

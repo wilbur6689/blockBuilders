@@ -23,7 +23,8 @@ public class GameFrame extends JPanel implements ActionListener{
 	public static int level = 1;
 	
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	static ArrayList<Missile> missiles  = new ArrayList<Missile>();
+	static ArrayList<Missile> missilesP1  = new ArrayList<Missile>();
+	static ArrayList<Missile> missilesP2  = new ArrayList<Missile>();
 	static ArrayList<Block> blocks = new ArrayList<Block>();
 	Random rand = new Random();
 	
@@ -33,9 +34,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		player1 = new Player (250, 250);
 		player2 = new Player (1000, 250);
 		
-		addKeyListener(new KeyAdapt(player1));
-		addKeyListener(new KeyAdapt(player2));
-		
+		addKeyListener(new KeyAdapt(player1, player2));
 		mainTimer = new Timer(10, this);
 		mainTimer.start();
 		
@@ -47,11 +46,11 @@ public class GameFrame extends JPanel implements ActionListener{
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		ImageIcon ic = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/background.jpg");
-		g2d.drawImage(ic.getImage(), 0,0, null);
+		ImageIcon backGround = new ImageIcon("D:/Eclipse Text Editor/gitRepo/blockBuilders/images/background.jpg");
+		g2d.drawImage(backGround.getImage(), 0,0, null);
 		
-		player1.draw(g2d);
-		player2.draw(g2d);
+		player1.drawP1(g2d);
+		player2.drawP2(g2d);
 		
 		
 		for (int i=0; i < enemies.size(); i++) {
@@ -59,9 +58,14 @@ public class GameFrame extends JPanel implements ActionListener{
 			tempEnemy.draw(g2d);
 		}
 		
-		for (int i=0; i < missiles.size(); i++) {
-			Missile tempMissile = missiles.get(i);
-			tempMissile.draw(g2d);
+		for (int i=0; i < missilesP1.size(); i++) {
+			Missile tempMissile = missilesP1.get(i);
+			tempMissile.drawP1(g2d);
+		}
+		
+		for (int i=0; i < missilesP2.size(); i++) {
+			Missile tempMissile = missilesP2.get(i);
+			tempMissile.drawP2(g2d);
 		}
 		
 		for (int i = 0; i < blocks.size(); i++) {
@@ -79,8 +83,13 @@ public class GameFrame extends JPanel implements ActionListener{
 			tempEnemy.update();
 		}
 		
-		for (int i=0; i < missiles.size(); i++) {
-			Missile tempMissile = missiles.get(i);
+		for (int i=0; i < missilesP1.size(); i++) {
+			Missile tempMissile = missilesP1.get(i);
+			tempMissile.update(); 
+		}
+		
+		for (int i=0; i < missilesP2.size(); i++) {
+			Missile tempMissile = missilesP2.get(i);
 			tempMissile.update(); 
 		}
 		
@@ -116,16 +125,28 @@ public class GameFrame extends JPanel implements ActionListener{
 		return enemies;
 	}
 	
-	public static void addMissile(Missile missile) {
-		missiles.add(missile);
+	public static void addP1Missile(Missile missile) {
+		missilesP1.add(missile);
 	}
 	
-	public static void removeMissile (Missile missile) {
-		missiles.remove(missile);
+	public static void removeP1Missile (Missile missile) {
+		missilesP1.remove(missile);
 	}
 	
-	public static ArrayList<Missile> getMissileList() {
-		return missiles;
+	public static void addP2Missile(Missile missile) {
+		missilesP2.add(missile);
+	}
+	
+	public static void removeP2Missile (Missile missile) {
+		missilesP2.remove(missile);
+	}
+	
+	public static ArrayList<Missile> getMissileListP1() {
+		return missilesP1;
+	}
+	
+	public static ArrayList<Missile> getMissileListP2() {
+		return missilesP2;
 	}
 	
 	
@@ -135,7 +156,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		enemyCount = level * 5;
 		
 		for (int i = 0;i < enemyCount; i++) {
-			addEnemy(new Enemy(1200 + rand.nextInt(300),rand.nextInt(600)));
+			addEnemy(new Enemy(1200 + rand.nextInt(300),100 + rand.nextInt(200)));
 		}
 	}
 	
@@ -143,7 +164,8 @@ public class GameFrame extends JPanel implements ActionListener{
 		if (enemies.size() == 0) {
 			level++;
 			enemies.clear();
-			missiles.clear();
+			missilesP1.clear();
+			missilesP2.clear();
 			JOptionPane.showMessageDialog(null, "Good work, you have completed level " + (level-1) + ". lets move onto the next level!");
 			startGame();
 		}
