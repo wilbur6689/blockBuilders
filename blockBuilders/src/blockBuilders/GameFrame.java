@@ -156,7 +156,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		enemyCount = level * 5;
 		
 		for (int i = 0;i < enemyCount; i++) {
-			addEnemy(new Enemy(1200 + rand.nextInt(300),100 + rand.nextInt(200)));
+			addEnemy(new Enemy(600 + rand.nextInt(300), 25 + rand.nextInt(500)));
 		}
 	}
 	
